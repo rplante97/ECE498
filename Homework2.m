@@ -5,7 +5,6 @@
 %Starter Code
 clear
 clc
-
 enrollment = [
 % Year	
 1995	1996	1997	1998	1999	2000	2001	2002	2003	2004	2005	2006	2007	2008	2009	2010	2011	2012	2013	2014	2015    2016    2017
@@ -27,25 +26,72 @@ enrollment = [
 
 %Homework start
 %Figure 1
+figure(1)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
 year = enrollment(1,:);
 enrolled = enrollment([2:8],:)';
-figure(1)
-bar(year, enrolled, 'stacked')
+bar(year, enrolled/1000, 'stacked')
+alpha(0.7)
+title('Enrollment of University of Maine Campuses, 1995 - 2016')
+xlim([1994.5 2017.5])
+xticks(1995:1:2017)
+xlabel('Year')
+ylabel('Total Enrollment (thousands)')
+legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'Location', 'southwest')
 
 %Figure 2
-totalPerYear = sum(enrollment([2:8], :))
-totalUM = enrollment(2, :)
-totalUSM = enrollment(8, :)
 figure(2)
-plot(year, totalUM./totalPerYear)
-plot(year, totalUSM./totalPerYear)
-
-%Figure 3 TODO
-
-%Figure 4
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
 hold on
-enrollmentUM = enrollment(2,:)
-bar(year, enrollmentUM)
-percentGrowth = diff(enrollment(2,:))
-plot(year, percentGrowth)
+box on
+totalPerYear = sum(enrollment([2:8], :));
+totalUM = enrollment(2, :)*100;
+totalUSM = enrollment(8, :)*100;
+plot(year, (totalUM./totalPerYear), '--or', 'MarkerSize', 3)
+plot(year, totalUSM./totalPerYear, ':^m', 'MarkerSize', 3)
+xlim([1995 2017])
+xlabel('Year')
+ylabel('Percentage of System Total(%)')
+legend('UMaine', 'USM', 'Location', 'northwest')
+
+%Figure 3
+figure(3)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
+hold on
+box on
+%BAR GRAPH
+bar(year, enrolled/1000, 'stacked', 'EdgeColor', 'none')
+alpha(0.7)
+xlim([1994.5 2017.5])
+xticks(1996:2:2017)
+%LINE GRAPH
+yyaxis right
+plot(year, (totalUM./totalPerYear), '--or', 'MarkerSize', 3, 'LineWidth', 1.5)
+plot(year, totalUSM./totalPerYear, ':^m', 'MarkerSize', 3, 'LineWidth', 1.5)
+ylabel('Percentage of total enrollment(%)')
+legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'UM Ratio', 'USM Ratio','Orientation','horizontal','Location', 'northoutside')
+%Figure 4
+figure(4)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
+hold on
+box on
+%BAR GRAPH
+enrollmentUM = enrollment(2,:);
+bar(year, enrollmentUM/1000, 'green')
+ylim([9 12])
+xlim([1994.5 2017.5])
+xticks(1996:2:2017)
+ylabel('Enrollment (thousands)')
+%LINE GRAPH
+yyaxis right
+ylim([-10 10])
+yticks(-10:10:10)
+ylabel('Year over year growth (%)')
+percentGrowth = diff(enrollment(2,:));
+percentGrowth = [NaN; percentGrowth(1:end)']; %Add NaN value to beginning of vector so vector lengths match
+plot(year, percentGrowth/100, '--or', 'MarkerSize', 3)
+legend('UM Enrollment', 'UM YoY Growth', 'Orientation', 'horizontal', 'Location', 'northoutside')
+
+
+
 
