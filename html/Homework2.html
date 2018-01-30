@@ -1,0 +1,263 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework2</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-01-29"><meta name="DC.source" content="Homework2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Ryan Plante</span>
+<span class="comment">%ECE 498 Homework 2</span>
+<span class="comment">%1/29/2018</span>
+
+<span class="comment">%Starter Code</span>
+clear
+clc
+enrollment = [
+<span class="comment">% Year</span>
+1995	1996	1997	1998	1999	2000	2001	2002	2003	2004	2005	2006	2007	2008	2009	2010	2011	2012	2013	2014	2015    2016    2017
+<span class="comment">% UM</span>
+9996	9928	9213	9451	9945	10282	10698	11135	11222	11358	11435	11797	11912	11818	11867	11501	11168	10901	11247	11286   10922   11219    11240
+<span class="comment">% UMA</span>
+6023	5496	5248	5130	5612	5617	5575	5722	5943	5538	5494	5257	5101	4974	5054	5074	4974	4990	4770	4664    4683    4416    4014
+<span class="comment">% UMF</span>
+2510	2512	2446	2507	2479	2413	2435	2395	2420	2349	2452	2424	2265	2227	2238	2322	2269	2179	2061	1960    2016    2000    2080
+<span class="comment">% UMFK</span>
+731	767	690	827	926	886	897	827	924	1076	1193	1339	1269	1102	1126	1073	1080	1169	1209	1327    1559    1904   1760
+<span class="comment">% UMM</span>
+856	915	884	899	908	927	1017	1068	1313	1191	1149	1259	1093	1023	964	951	863	925	892	810     786     745    701
+<span class="comment">% UMPI</span>
+1278	1347	1307	1344	1378	1427	1367	1560	1546	1652	1548	1655	1533	1455	1436	1434	1453	1463	1263	1138    1289    1326   1408
+<span class="comment">% USM</span>
+9721	9966	10230	10462	10645	10820	10966	11382	11007	11089	10974	10478	10453	10009	9655	9654	9301	9385	8923	8428    7739    7855    7794
+];
+
+<span class="comment">%Homework start</span>
+<span class="comment">%Figure 1</span>
+figure(1)
+set(gcf, <span class="string">'units'</span>, <span class="string">'points'</span>, <span class="string">'position'</span>,[400,150,800,400])
+year = enrollment(1,:);
+enrolled = enrollment([2:8],:)';
+bar(year, enrolled/1000, <span class="string">'stacked'</span>)
+alpha(0.7)
+title(<span class="string">'Enrollment of University of Maine Campuses, 1995 - 2016'</span>)
+xlim([1994.5 2017.5])
+xticks(1995:1:2017)
+xlabel(<span class="string">'Year'</span>)
+ylabel(<span class="string">'Total Enrollment (thousands)'</span>)
+legend(<span class="string">'UM'</span>, <span class="string">'UMA'</span>, <span class="string">'UMF'</span>, <span class="string">'UMFK'</span>, <span class="string">'UMM'</span>, <span class="string">'UMPI'</span>, <span class="string">'USM'</span>, <span class="string">'Location'</span>, <span class="string">'southwest'</span>)
+
+<span class="comment">%Figure 2</span>
+figure(2)
+set(gcf, <span class="string">'units'</span>, <span class="string">'points'</span>, <span class="string">'position'</span>,[400,150,800,400])
+hold <span class="string">on</span>
+box <span class="string">on</span>
+totalPerYear = sum(enrollment([2:8], :));
+totalUM = enrollment(2, :)*100;
+totalUSM = enrollment(8, :)*100;
+plot(year, (totalUM./totalPerYear), <span class="string">'--or'</span>, <span class="string">'MarkerSize'</span>, 3)
+plot(year, totalUSM./totalPerYear, <span class="string">':^m'</span>, <span class="string">'MarkerSize'</span>, 3)
+xlim([1995 2017])
+xlabel(<span class="string">'Year'</span>)
+ylabel(<span class="string">'Percentage of System Total(%)'</span>)
+legend(<span class="string">'UMaine'</span>, <span class="string">'USM'</span>, <span class="string">'Location'</span>, <span class="string">'northwest'</span>)
+
+<span class="comment">%Figure 3</span>
+figure(3)
+set(gcf, <span class="string">'units'</span>, <span class="string">'points'</span>, <span class="string">'position'</span>,[400,150,800,400])
+hold <span class="string">on</span>
+box <span class="string">on</span>
+<span class="comment">%BAR GRAPH</span>
+bar(year, enrolled/1000, <span class="string">'stacked'</span>, <span class="string">'EdgeColor'</span>, <span class="string">'none'</span>)
+alpha(0.7)
+xlim([1994.5 2017.5])
+xticks(1996:2:2017)
+<span class="comment">%LINE GRAPH</span>
+yyaxis <span class="string">right</span>
+plot(year, (totalUM./totalPerYear), <span class="string">'--or'</span>, <span class="string">'MarkerSize'</span>, 3, <span class="string">'LineWidth'</span>, 1.5)
+plot(year, totalUSM./totalPerYear, <span class="string">':^m'</span>, <span class="string">'MarkerSize'</span>, 3, <span class="string">'LineWidth'</span>, 1.5)
+ylabel(<span class="string">'Percentage of total enrollment(%)'</span>)
+legend(<span class="string">'UM'</span>, <span class="string">'UMA'</span>, <span class="string">'UMF'</span>, <span class="string">'UMFK'</span>, <span class="string">'UMM'</span>, <span class="string">'UMPI'</span>, <span class="string">'USM'</span>, <span class="string">'UM Ratio'</span>, <span class="string">'USM Ratio'</span>,<span class="string">'Orientation'</span>,<span class="string">'horizontal'</span>,<span class="string">'Location'</span>, <span class="string">'northoutside'</span>)
+<span class="comment">%Figure 4</span>
+figure(4)
+set(gcf, <span class="string">'units'</span>, <span class="string">'points'</span>, <span class="string">'position'</span>,[400,150,800,400])
+hold <span class="string">on</span>
+box <span class="string">on</span>
+<span class="comment">%BAR GRAPH</span>
+enrollmentUM = enrollment(2,:);
+bar(year, enrollmentUM/1000, <span class="string">'green'</span>)
+ylim([9 12])
+xlim([1994.5 2017.5])
+xticks(1996:2:2017)
+ylabel(<span class="string">'Enrollment (thousands)'</span>)
+<span class="comment">%LINE GRAPH</span>
+yyaxis <span class="string">right</span>
+ylim([-10 10])
+yticks(-10:10:10)
+ylabel(<span class="string">'Year over year growth (%)'</span>)
+percentGrowth = diff(enrollment(2,:));
+percentGrowth = [NaN; percentGrowth(1:end)']; <span class="comment">%Add NaN value to beginning of vector so vector lengths match</span>
+plot(year, percentGrowth/100, <span class="string">'--or'</span>, <span class="string">'MarkerSize'</span>, 3)
+legend(<span class="string">'UM Enrollment'</span>, <span class="string">'UM YoY Growth'</span>, <span class="string">'Orientation'</span>, <span class="string">'horizontal'</span>, <span class="string">'Location'</span>, <span class="string">'northoutside'</span>)
+</pre><img vspace="5" hspace="5" src="Homework2_01.png" style="width:1066px;height:534px;" alt=""> <img vspace="5" hspace="5" src="Homework2_02.png" style="width:1066px;height:534px;" alt=""> <img vspace="5" hspace="5" src="Homework2_03.png" style="width:1066px;height:534px;" alt=""> <img vspace="5" hspace="5" src="Homework2_04.png" style="width:1066px;height:534px;" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Ryan Plante
+%ECE 498 Homework 2
+%1/29/2018
+
+%Starter Code
+clear
+clc
+enrollment = [
+% Year	
+1995	1996	1997	1998	1999	2000	2001	2002	2003	2004	2005	2006	2007	2008	2009	2010	2011	2012	2013	2014	2015    2016    2017
+% UM	
+9996	9928	9213	9451	9945	10282	10698	11135	11222	11358	11435	11797	11912	11818	11867	11501	11168	10901	11247	11286   10922   11219    11240
+% UMA	
+6023	5496	5248	5130	5612	5617	5575	5722	5943	5538	5494	5257	5101	4974	5054	5074	4974	4990	4770	4664    4683    4416    4014
+% UMF	
+2510	2512	2446	2507	2479	2413	2435	2395	2420	2349	2452	2424	2265	2227	2238	2322	2269	2179	2061	1960    2016    2000    2080
+% UMFK	
+731	767	690	827	926	886	897	827	924	1076	1193	1339	1269	1102	1126	1073	1080	1169	1209	1327    1559    1904   1760
+% UMM	
+856	915	884	899	908	927	1017	1068	1313	1191	1149	1259	1093	1023	964	951	863	925	892	810     786     745    701
+% UMPI	
+1278	1347	1307	1344	1378	1427	1367	1560	1546	1652	1548	1655	1533	1455	1436	1434	1453	1463	1263	1138    1289    1326   1408
+% USM	
+9721	9966	10230	10462	10645	10820	10966	11382	11007	11089	10974	10478	10453	10009	9655	9654	9301	9385	8923	8428    7739    7855    7794
+];
+
+%Homework start
+%Figure 1
+figure(1)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
+year = enrollment(1,:);
+enrolled = enrollment([2:8],:)';
+bar(year, enrolled/1000, 'stacked')
+alpha(0.7)
+title('Enrollment of University of Maine Campuses, 1995 - 2016')
+xlim([1994.5 2017.5])
+xticks(1995:1:2017)
+xlabel('Year')
+ylabel('Total Enrollment (thousands)')
+legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'Location', 'southwest')
+
+%Figure 2
+figure(2)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
+hold on
+box on
+totalPerYear = sum(enrollment([2:8], :));
+totalUM = enrollment(2, :)*100;
+totalUSM = enrollment(8, :)*100;
+plot(year, (totalUM./totalPerYear), 'REPLACE_WITH_DASH_DASHor', 'MarkerSize', 3)
+plot(year, totalUSM./totalPerYear, ':^m', 'MarkerSize', 3)
+xlim([1995 2017])
+xlabel('Year')
+ylabel('Percentage of System Total(%)')
+legend('UMaine', 'USM', 'Location', 'northwest')
+
+%Figure 3
+figure(3)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
+hold on
+box on
+%BAR GRAPH
+bar(year, enrolled/1000, 'stacked', 'EdgeColor', 'none')
+alpha(0.7)
+xlim([1994.5 2017.5])
+xticks(1996:2:2017)
+%LINE GRAPH
+yyaxis right
+plot(year, (totalUM./totalPerYear), 'REPLACE_WITH_DASH_DASHor', 'MarkerSize', 3, 'LineWidth', 1.5)
+plot(year, totalUSM./totalPerYear, ':^m', 'MarkerSize', 3, 'LineWidth', 1.5)
+ylabel('Percentage of total enrollment(%)')
+legend('UM', 'UMA', 'UMF', 'UMFK', 'UMM', 'UMPI', 'USM', 'UM Ratio', 'USM Ratio','Orientation','horizontal','Location', 'northoutside')
+%Figure 4
+figure(4)
+set(gcf, 'units', 'points', 'position',[400,150,800,400])
+hold on
+box on
+%BAR GRAPH
+enrollmentUM = enrollment(2,:);
+bar(year, enrollmentUM/1000, 'green')
+ylim([9 12])
+xlim([1994.5 2017.5])
+xticks(1996:2:2017)
+ylabel('Enrollment (thousands)')
+%LINE GRAPH
+yyaxis right
+ylim([-10 10])
+yticks(-10:10:10)
+ylabel('Year over year growth (%)')
+percentGrowth = diff(enrollment(2,:));
+percentGrowth = [NaN; percentGrowth(1:end)']; %Add NaN value to beginning of vector so vector lengths match
+plot(year, percentGrowth/100, 'REPLACE_WITH_DASH_DASHor', 'MarkerSize', 3)
+legend('UM Enrollment', 'UM YoY Growth', 'Orientation', 'horizontal', 'Location', 'northoutside')
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
