@@ -1,3 +1,7 @@
+%Ryan Plante
+%ECE498 Homework 3
+%2/5/2018
+
 %% Problem 1
 figure(1)
 u = linspace(-1.5,1.5,50);
@@ -6,9 +10,17 @@ v = u;
 x = u.*(1-((u.*u)./3)+(v.*v));
 y = -v.*(1-((v.*v)./3)+(u.*u));
 z = ((u.*u)-(v.*v));
-surfc(x,y,z)
+handles = surfc(x,y,z);
+ 
+% handles is a 2-element array of handles: the surface plot and the contours
+hContour = handles(2); % get the handle to the contour lines
+hContour.ContourZLevel = -2.5; % set the contour's Z position (default: hAxes.ZLim(1)=-10)
+ 
+% We can also customize other aspects of the contour lines, for example:
+hContour.LineWidth = 2; % set the contour lines' width (default: 0.5)
+ 
 camlight left
-colormap(jet)
+colormap('jet')
 axis tight
 xlabel('X')
 ylabel('Y')
