@@ -56,9 +56,30 @@ x0 = [0 0 0];
 [x, fval] = fminunc(@myfunc, x0);
 fprintf('\t\tMinimum values:\n\t\tX\t\tY\t\tZ\n')
 disp(x)
-function f = myfunc(x)
-    f = (x(1)^2 + x(2)^2)^2 - x(1)^2 - x(2) + x(3)^2;
-end
+
 %% Question 4: Minimizing multi-variable function
 %Minimize: f(x,y) = 2x^2 + 20y^2 + 6xy + 5x
 %Constraint: x - y = -2
+
+x0 = [0 0];
+x = fmincon(@myfunc2, x0, [0 0], 0, [1 -1], -2);
+fprintf('Min at: %f\n', x)
+
+%Graph
+
+[x,y] = meshgrid(linspace(-3,3,200),linspace(-3,3,200));
+eq = 2.*x.*2 + 20.*y.^2+6.*x.*y+5.*x;
+mesh(x,y,eq);
+xlabel('x1')
+title('Problem 4 Graph Verification')
+ylabel('x2')
+zlabel('f')
+%% Functions
+function f = myfunc(x)
+    f = (x(1)^2 + x(2)^2)^2 - x(1)^2 - x(2) + x(3)^2;
+end
+
+function f = myfunc2(x)
+    f = 2*x(1)^2+20*x(2)^2+6*x(1)*x(2)+5*x(1);
+end
+
