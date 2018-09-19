@@ -38,59 +38,59 @@ UMO = enrollment(2, :)';
 %If we plot the curve of UMO enrollment we can see that this model
 %theoretically fits pretty well
 figure(1);
-plot(year, UMO/1000)
-title('UMO Population Over Time')
-xlabel('Year')
-ylabel('Enrollment (thousands)')
+plot(year, UMO/1000);
+title('UMO Population Over Time');
+xlabel('Year');
+ylabel('Enrollment (thousands)');
 
 %As such a sinusoidal curve fitting algorithm should provide a realtively good
 %fit with a good prediction value, as a population is naturally expected to
 %oscillate
-figure(2)
-[population, gof] = fit(year, UMO/1000, 'sin4')
+figure(2);
+[population, gof] = fit(year, UMO/1000, 'sin4');
 %looks like a pretty decent fit
-plot( population, year, UMO/1000 )
-title('Sin4 Fitted Curve')
-xlabel('Year')
-ylabel('Enrollment (thousands)')
+plot( population, year, UMO/1000 );
+title('Sin4 Fitted Curve');
+xlabel('Year');
+ylabel('Enrollment (thousands)');
 
 
 %Residual appears to be very random and follow no specific pattern, so we 
 %can assume that our curve our curve fits decently
-figure(3)
-plot(population, year, UMO/1000, 'residual' )
-title('Residual of Fit')
-xlabel('Year')
+figure(3);
+plot(population, year, UMO/1000, 'residual' );
+title('Residual of Fit');
+xlabel('Year');
 
 %Despite a good residual and inital fit, our prediction bounds are huge and
 %don't seem to offer much prediction value
-figure(4)
-plot(year, UMO/1000, 'o')
-xlim( [1980, 2050] )
-hold on
-plot(population, 'predobs')
-xlabel('Year')
-ylabel('Enrollment (thousands)')
-title('Enrollment Prediction out to 2050')
-grid on
-hold off
+figure(4);
+plot(year, UMO/1000, 'o');
+xlim( [1980, 2050] );
+hold on;
+plot(population, 'predobs');
+xlabel('Year');
+ylabel('Enrollment (thousands)');
+title('Enrollment Prediction out to 2050');
+grid on;
+hold off;
 
 %The 95% confidence interval confirms that our fit has basically no
 %prediction power, with bounds so large the initial data looks like a
 %straight line
-figure(5)
+figure(5);
 futureyears= (2000:10:2050).';
-popFuture = population(futureyears)
-ci = predint(population, futureyears, 0.95, 'observation' )
-plot(year, UMO/1000, 'o')
-xlim( [1980, 2050] )
-hold on
-plot(population)
+popFuture = population(futureyears);
+ci = predint(population, futureyears, 0.95, 'observation' );
+plot(year, UMO/1000, 'o');
+xlim( [1980, 2050] );
+hold on;
+plot(population);
 h = errorbar( futureyears, popFuture, popFuture-ci(:,1), ci(:,2)-popFuture, '.' );
-xlabel('Year')
-ylabel('Enrollment (thousands)')
-title('95% Confidence Interval of Fit')
-legend( 'Year v UMO Pop', 'sin4', 'prediction')
+xlabel('Year');
+ylabel('Enrollment (thousands)');
+title('95% Confidence Interval of Fit');
+legend( 'Year v UMO Pop', 'sin4', 'prediction');
 %Overall it seems as if the sinusoidal function was a very bad choice and
 %has almost no prediction power. This is surprising due to the face that
 %populations are naturally expected to oscillate. That being said the data

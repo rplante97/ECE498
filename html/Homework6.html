@@ -1,0 +1,266 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework6</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-19"><meta name="DC.source" content="Homework6.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Ryan Plante</span>
+<span class="comment">%ECE498 Homework 6, Curve Fitting</span>
+<span class="comment">%3/18/2018</span>
+clear
+<span class="comment">%Given Data</span>
+enrollment = [
+<span class="comment">% Year</span>
+1995	1996	1997	1998	1999	2000	2001	2002	2003	2004	2005	2006	2007	2008	2009	2010	2011	2012	2013	2014	2015    2016
+<span class="comment">% UM</span>
+9996	9928	9213	9451	9945	10282	10698	11135	11222	11358	11435	11797	11912	11818	11867	11501	11168	10901	11247	11286   10922   11219
+<span class="comment">% UMA</span>
+6023	5496	5248	5130	5612	5617	5575	5722	5943	5538	5494	5257	5101	4974	5054	5074	4974	4990	4770	4664    4683    4416
+<span class="comment">% UMF</span>
+2510	2512	2446	2507	2479	2413	2435	2395	2420	2349	2452	2424	2265	2227	2238	2322	2269	2179	2061	1960    2016    2000
+<span class="comment">% UMFK</span>
+731	767	690	827	926	886	897	827	924	1076	1193	1339	1269	1102	1126	1073	1080	1169	1209	1327    1559    1904
+<span class="comment">% UMM</span>
+856	915	884	899	908	927	1017	1068	1313	1191	1149	1259	1093	1023	964	951	863	925	892	810     786     745
+<span class="comment">% UMPI</span>
+1278	1347	1307	1344	1378	1427	1367	1560	1546	1652	1548	1655	1533	1455	1436	1434	1453	1463	1263	1138    1289    1326
+<span class="comment">% USM</span>
+9721	9966	10230	10462	10645	10820	10966	11382	11007	11089	10974	10478	10453	10009	9655	9654	9301	9385	8923	8428    7739    7855
+];
+
+year = enrollment(1, :)';
+UMO = enrollment(2, :)';
+
+
+<span class="comment">%Conventionally stable natural populations are governed by a negative</span>
+<span class="comment">%feedback loop that will osciallate in a sinusoidal fashion around the</span>
+<span class="comment">%carrying capacity of said population. In the case of UMO the model that</span>
+<span class="comment">%best fits is that of a "new" population. That is to say that a period of</span>
+<span class="comment">%high (often exponential) growth is intially seen as the population grows</span>
+<span class="comment">%towards carry capacity. The population continues to grow until it</span>
+<span class="comment">%overshoots its carrying capacity at which point the negative feedback</span>
+<span class="comment">%kicks in and the population begins to decrease and stabilize.</span>
+
+<span class="comment">%If we plot the curve of UMO enrollment we can see that this model</span>
+<span class="comment">%theoretically fits pretty well</span>
+figure(1);
+plot(year, UMO/1000);
+title(<span class="string">'UMO Population Over Time'</span>);
+xlabel(<span class="string">'Year'</span>);
+ylabel(<span class="string">'Enrollment (thousands)'</span>);
+
+<span class="comment">%As such a sinusoidal curve fitting algorithm should provide a realtively good</span>
+<span class="comment">%fit with a good prediction value, as a population is naturally expected to</span>
+<span class="comment">%oscillate</span>
+figure(2);
+[population, gof] = fit(year, UMO/1000, <span class="string">'sin4'</span>);
+<span class="comment">%looks like a pretty decent fit</span>
+plot( population, year, UMO/1000 );
+title(<span class="string">'Sin4 Fitted Curve'</span>);
+xlabel(<span class="string">'Year'</span>);
+ylabel(<span class="string">'Enrollment (thousands)'</span>);
+
+
+<span class="comment">%Residual appears to be very random and follow no specific pattern, so we</span>
+<span class="comment">%can assume that our curve our curve fits decently</span>
+figure(3);
+plot(population, year, UMO/1000, <span class="string">'residual'</span> );
+title(<span class="string">'Residual of Fit'</span>);
+xlabel(<span class="string">'Year'</span>);
+
+<span class="comment">%Despite a good residual and inital fit, our prediction bounds are huge and</span>
+<span class="comment">%don't seem to offer much prediction value</span>
+figure(4);
+plot(year, UMO/1000, <span class="string">'o'</span>);
+xlim( [1980, 2050] );
+hold <span class="string">on</span>;
+plot(population, <span class="string">'predobs'</span>);
+xlabel(<span class="string">'Year'</span>);
+ylabel(<span class="string">'Enrollment (thousands)'</span>);
+title(<span class="string">'Enrollment Prediction out to 2050'</span>);
+grid <span class="string">on</span>;
+hold <span class="string">off</span>;
+
+<span class="comment">%The 95% confidence interval confirms that our fit has basically no</span>
+<span class="comment">%prediction power, with bounds so large the initial data looks like a</span>
+<span class="comment">%straight line</span>
+figure(5);
+futureyears= (2000:10:2050).';
+popFuture = population(futureyears);
+ci = predint(population, futureyears, 0.95, <span class="string">'observation'</span> );
+plot(year, UMO/1000, <span class="string">'o'</span>);
+xlim( [1980, 2050] );
+hold <span class="string">on</span>;
+plot(population);
+h = errorbar( futureyears, popFuture, popFuture-ci(:,1), ci(:,2)-popFuture, <span class="string">'.'</span> );
+xlabel(<span class="string">'Year'</span>);
+ylabel(<span class="string">'Enrollment (thousands)'</span>);
+title(<span class="string">'95% Confidence Interval of Fit'</span>);
+legend( <span class="string">'Year v UMO Pop'</span>, <span class="string">'sin4'</span>, <span class="string">'prediction'</span>);
+<span class="comment">%Overall it seems as if the sinusoidal function was a very bad choice and</span>
+<span class="comment">%has almost no prediction power. This is surprising due to the face that</span>
+<span class="comment">%populations are naturally expected to oscillate. That being said the data</span>
+<span class="comment">%set we are fitting is relatively small and so a good fit is unlikely.</span>
+</pre><img vspace="5" hspace="5" src="Homework6_01.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="Homework6_02.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="Homework6_03.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="Homework6_04.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="Homework6_05.png" style="width:560px;height:420px;" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Ryan Plante
+%ECE498 Homework 6, Curve Fitting
+%3/18/2018
+clear
+%Given Data
+enrollment = [
+% Year	
+1995	1996	1997	1998	1999	2000	2001	2002	2003	2004	2005	2006	2007	2008	2009	2010	2011	2012	2013	2014	2015    2016
+% UM	
+9996	9928	9213	9451	9945	10282	10698	11135	11222	11358	11435	11797	11912	11818	11867	11501	11168	10901	11247	11286   10922   11219
+% UMA	
+6023	5496	5248	5130	5612	5617	5575	5722	5943	5538	5494	5257	5101	4974	5054	5074	4974	4990	4770	4664    4683    4416
+% UMF	
+2510	2512	2446	2507	2479	2413	2435	2395	2420	2349	2452	2424	2265	2227	2238	2322	2269	2179	2061	1960    2016    2000
+% UMFK	
+731	767	690	827	926	886	897	827	924	1076	1193	1339	1269	1102	1126	1073	1080	1169	1209	1327    1559    1904
+% UMM	
+856	915	884	899	908	927	1017	1068	1313	1191	1149	1259	1093	1023	964	951	863	925	892	810     786     745
+% UMPI	
+1278	1347	1307	1344	1378	1427	1367	1560	1546	1652	1548	1655	1533	1455	1436	1434	1453	1463	1263	1138    1289    1326
+% USM	
+9721	9966	10230	10462	10645	10820	10966	11382	11007	11089	10974	10478	10453	10009	9655	9654	9301	9385	8923	8428    7739    7855
+];
+
+year = enrollment(1, :)';
+UMO = enrollment(2, :)';
+
+
+%Conventionally stable natural populations are governed by a negative
+%feedback loop that will osciallate in a sinusoidal fashion around the
+%carrying capacity of said population. In the case of UMO the model that
+%best fits is that of a "new" population. That is to say that a period of
+%high (often exponential) growth is intially seen as the population grows
+%towards carry capacity. The population continues to grow until it
+%overshoots its carrying capacity at which point the negative feedback
+%kicks in and the population begins to decrease and stabilize.
+
+%If we plot the curve of UMO enrollment we can see that this model
+%theoretically fits pretty well
+figure(1);
+plot(year, UMO/1000);
+title('UMO Population Over Time');
+xlabel('Year');
+ylabel('Enrollment (thousands)');
+
+%As such a sinusoidal curve fitting algorithm should provide a realtively good
+%fit with a good prediction value, as a population is naturally expected to
+%oscillate
+figure(2);
+[population, gof] = fit(year, UMO/1000, 'sin4');
+%looks like a pretty decent fit
+plot( population, year, UMO/1000 );
+title('Sin4 Fitted Curve');
+xlabel('Year');
+ylabel('Enrollment (thousands)');
+
+
+%Residual appears to be very random and follow no specific pattern, so we 
+%can assume that our curve our curve fits decently
+figure(3);
+plot(population, year, UMO/1000, 'residual' );
+title('Residual of Fit');
+xlabel('Year');
+
+%Despite a good residual and inital fit, our prediction bounds are huge and
+%don't seem to offer much prediction value
+figure(4);
+plot(year, UMO/1000, 'o');
+xlim( [1980, 2050] );
+hold on;
+plot(population, 'predobs');
+xlabel('Year');
+ylabel('Enrollment (thousands)');
+title('Enrollment Prediction out to 2050');
+grid on;
+hold off;
+
+%The 95% confidence interval confirms that our fit has basically no
+%prediction power, with bounds so large the initial data looks like a
+%straight line
+figure(5);
+futureyears= (2000:10:2050).';
+popFuture = population(futureyears);
+ci = predint(population, futureyears, 0.95, 'observation' );
+plot(year, UMO/1000, 'o');
+xlim( [1980, 2050] );
+hold on;
+plot(population);
+h = errorbar( futureyears, popFuture, popFuture-ci(:,1), ci(:,2)-popFuture, '.' );
+xlabel('Year');
+ylabel('Enrollment (thousands)');
+title('95% Confidence Interval of Fit');
+legend( 'Year v UMO Pop', 'sin4', 'prediction');
+%Overall it seems as if the sinusoidal function was a very bad choice and
+%has almost no prediction power. This is surprising due to the face that
+%populations are naturally expected to oscillate. That being said the data
+%set we are fitting is relatively small and so a good fit is unlikely.
+##### SOURCE END #####
+--></body></html>

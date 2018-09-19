@@ -1,0 +1,318 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Homework5</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-05"><meta name="DC.source" content="Homework5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Set Operations</a></li><li><a href="#3">REGEX</a></li><li><a href="#4">Tables</a></li></ul></div><pre class="codeinput"><span class="comment">%Ryan Plante</span>
+<span class="comment">%ECE 498 Matlab Homework 5</span>
+<span class="comment">%2/26/2018</span>
+</pre><h2 id="2">Set Operations</h2><pre class="codeinput">clear
+ece271 = [ <span class="comment">% ID, Score</span>
+900, 34;
+801, 90;
+700, 77;
+400, 33];
+
+ece473 = [ <span class="comment">% ID, Score</span>
+900, 67;
+802, 99;
+700, 35;
+500, 88];
+
+id = [ece271(:,1); ece473(:,1)];
+id = unique(id);
+scores = NaN*ones(length(id),3);
+scores(:,1) = id (:,1);
+
+[c, ia, ib] = intersect(id, ece271(:,1));
+scores(ia, 2) = ece271(ib,2);
+[c, ia, ib] = intersect(id, ece473(:,1));
+scores(ia,3) = ece473(ib, 2)
+</pre><pre class="codeoutput">
+scores =
+
+   400    33   NaN
+   500   NaN    88
+   700    77    35
+   801    90   NaN
+   802   NaN    99
+   900    34    67
+
+</pre><h2 id="3">REGEX</h2><pre class="codeinput">str = <span class="string">'Welcome to ECE 498! My phone number is 207-581-2499. My email is hello@maine.edu. How to contact you?'</span>;
+
+addr1 = <span class="string">'5713 Chadbourne Hall, Orono, ME 04469-5713'</span>;
+addr2 = <span class="string">'73 Harlow St, Bangor, ME 04401'</span>;
+addr3 = <span class="string">'141 Center St, Old Town, ME 04468'</span>;
+addr{1} = addr1;
+addr{2} = addr2;
+addr{3} = addr3;
+
+<span class="comment">%Words in str</span>
+words = <span class="string">'[^a-zA-Z0-9 ]'</span>;
+newstring = regexprep(str, words, <span class="string">""</span>);
+words = <span class="string">'\w*'</span>;
+numWords = length(regexp(newstring, words))
+
+<span class="comment">%Sentences in str</span>
+sentences = <span class="string">'[A-Z][a-z]{1}'</span>;
+numSentences = length(regexp(str, sentences))
+
+<span class="comment">%Email address in str</span>
+email = <span class="string">'[a-z_]+@[a-z]+\.(edu|net|com)'</span>;
+email = regexp(str, email, <span class="string">'match'</span>)
+
+<span class="comment">%Phone number in str</span>
+phonenum = <span class="string">'[0-9][0-9-]*-[0-9-]*[0-9]'</span>
+phonenum = regexp(str, phonenum, <span class="string">'match'</span>)
+
+<span class="comment">%5 digit zip code of addr</span>
+zip = <span class="string">'(?:\d{5})?'</span>;
+addr1 = regexp(addr{1}, zip, <span class="string">'match'</span>)
+addr2 = regexp(addr{2}, zip, <span class="string">'match'</span>)
+addr3 = regexp(addr{3}, zip, <span class="string">'match'</span>)
+</pre><pre class="codeoutput">
+numWords =
+
+    17
+
+
+numSentences =
+
+     4
+
+
+email =
+
+  cell
+
+    'hello@maine.edu'
+
+
+phonenum =
+
+    '[0-9][0-9-]*-[0-9-]*[0-9]'
+
+
+phonenum =
+
+  cell
+
+    '207-581-2499'
+
+
+addr1 =
+
+  cell
+
+    '04469'
+
+
+addr2 =
+
+  cell
+
+    '04401'
+
+
+addr3 =
+
+  cell
+
+    '04468'
+
+</pre><h2 id="4">Tables</h2><pre class="codeinput">clear
+data = readtable(<span class="string">'myPatients.dat'</span>)
+
+avgAge = mean(data{:,3})
+
+groupedGender = varfun(@mean, data, <span class="string">'InputVariable'</span>, <span class="string">'Age'</span>, <span class="string">'GroupingVariable'</span>, <span class="string">'Gender'</span>)
+
+data.BMI = (data.Weight*0.453592)./(data.Height*0.0254).^2
+writetable(data, <span class="string">'myPatients2.dat'</span>);
+</pre><pre class="codeoutput">
+data =
+
+  7&times;10 table
+
+     LastName      Gender     Age             Location              Height    Weight    Smoker    Systolic    Diastolic    SelfAssessedHealthStatus
+    __________    ________    ___    ___________________________    ______    ______    ______    ________    _________    ________________________
+
+    'Smith'       'Male'      38     'County General Hospital'      71        176       1         124         93           'Excellent'             
+    'Johnson'     'Male'      43     'VA Hospital'                  69        163       0         109         77           'Fair'                  
+    'Williams'    'Female'    38     'St. Mary's Medical Center'    64        131       0         125         83           'Good'                  
+    'Jones'       'Female'    40     'VA Hospital'                  67        133       0         117         75           'Fair'                  
+    'Brown'       'Female'    49     'County General Hospital'      64        119       0         122         80           'Good'                  
+    'Davis'       'Female'    46     'St. Mary's Medical Center'    68        142       0         121         70           'Good'                  
+    'Miller'      'Female'    33     'VA Hospital'                  64        142       1         130         88           'Good'                  
+
+
+avgAge =
+
+    41
+
+
+groupedGender =
+
+  2&times;3 table
+
+     Gender     GroupCount    mean_Age
+    ________    __________    ________
+
+    'Female'    5             41.2    
+    'Male'      2             40.5    
+
+
+data =
+
+  7&times;11 table
+
+     LastName      Gender     Age             Location              Height    Weight    Smoker    Systolic    Diastolic    SelfAssessedHealthStatus     BMI  
+    __________    ________    ___    ___________________________    ______    ______    ______    ________    _________    ________________________    ______
+
+    'Smith'       'Male'      38     'County General Hospital'      71        176       1         124         93           'Excellent'                 24.547
+    'Johnson'     'Male'      43     'VA Hospital'                  69        163       0         109         77           'Fair'                      24.071
+    'Williams'    'Female'    38     'St. Mary's Medical Center'    64        131       0         125         83           'Good'                      22.486
+    'Jones'       'Female'    40     'VA Hospital'                  67        133       0         117         75           'Fair'                      20.831
+    'Brown'       'Female'    49     'County General Hospital'      64        119       0         122         80           'Good'                      20.426
+    'Davis'       'Female'    46     'St. Mary's Medical Center'    68        142       0         121         70           'Good'                      21.591
+    'Miller'      'Female'    33     'VA Hospital'                  64        142       1         130         88           'Good'                      24.374
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Ryan Plante
+%ECE 498 Matlab Homework 5
+%2/26/2018
+
+%% Set Operations
+clear
+ece271 = [ % ID, Score
+900, 34;
+801, 90;
+700, 77;
+400, 33];
+ 
+ece473 = [ % ID, Score
+900, 67;
+802, 99;
+700, 35;
+500, 88];
+
+id = [ece271(:,1); ece473(:,1)];
+id = unique(id);
+scores = NaN*ones(length(id),3);
+scores(:,1) = id (:,1);
+
+[c, ia, ib] = intersect(id, ece271(:,1));
+scores(ia, 2) = ece271(ib,2);
+[c, ia, ib] = intersect(id, ece473(:,1));
+scores(ia,3) = ece473(ib, 2)
+
+%% REGEX
+str = 'Welcome to ECE 498! My phone number is 207-581-2499. My email is hello@maine.edu. How to contact you?';
+ 
+addr1 = '5713 Chadbourne Hall, Orono, ME 04469-5713';
+addr2 = '73 Harlow St, Bangor, ME 04401';
+addr3 = '141 Center St, Old Town, ME 04468';
+addr{1} = addr1;
+addr{2} = addr2;
+addr{3} = addr3;
+
+%Words in str
+words = '[^a-zA-Z0-9 ]';
+newstring = regexprep(str, words, "");
+words = '\w*';
+numWords = length(regexp(newstring, words))
+
+%Sentences in str
+sentences = '[A-Z][a-z]{1}';
+numSentences = length(regexp(str, sentences))
+
+%Email address in str
+email = '[a-z_]+@[a-z]+\.(edu|net|com)';
+email = regexp(str, email, 'match')
+
+%Phone number in str
+phonenum = '[0-9][0-9-]*-[0-9-]*[0-9]'
+phonenum = regexp(str, phonenum, 'match')
+
+%5 digit zip code of addr
+zip = '(?:\d{5})?';
+addr1 = regexp(addr{1}, zip, 'match')
+addr2 = regexp(addr{2}, zip, 'match')
+addr3 = regexp(addr{3}, zip, 'match')
+%% Tables
+clear
+data = readtable('myPatients.dat')
+
+avgAge = mean(data{:,3})
+
+groupedGender = varfun(@mean, data, 'InputVariable', 'Age', 'GroupingVariable', 'Gender')
+
+data.BMI = (data.Weight*0.453592)./(data.Height*0.0254).^2
+writetable(data, 'myPatients2.dat');
+
+##### SOURCE END #####
+--></body></html>
